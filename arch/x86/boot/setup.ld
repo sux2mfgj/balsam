@@ -7,4 +7,7 @@ SECTIONS
     . = 0;
     .realtext : { *(.realtext)}
     .realdata : { *(.realdate)}
+
+    .text : { *(.text)}
+    .data : { *(.data)}
 }

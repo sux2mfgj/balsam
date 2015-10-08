@@ -1,16 +1,24 @@
-CC		= clang
+CC			:= clang
 
-QEMUFLAGS	=	-monitor stdio -gdb tcp::10000 #-S
+QEMUFLAGS	:=	-monitor stdio -gdb tcp::10000 #-S
+CFLAGS		:=	-Wall -g --target=i686-elf 
 
-BOOT 	= 	boot.img
+BOOT 		:= 	boot.img
 
-LOADER 	= 	loader/loader.img
-BOOTSECTOR = bootsector/bootsector.img
+LOADER 		:= 	loader/loader.img
+BOOTSECTOR 	:= bootsector/bootsector.img
 
-HEADER	=	header.img
-OBJ		= 	header.o
-MAP		= 	header.map
-LDSCRIPT=	setup.ld
+HEADER		:=	header.img
+OBJS		:= 	header.o main.o
+MAP			:= 	header.map
+LDSCRIPT	:=	setup.ld
+
+.SUFFIXES: .S .c .o
+.S.o:
+	$(CC) $(CFLAGS) -c $<
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+
 
 all: $(BOOT)
 
@@ -26,11 +34,8 @@ $(LOADER):
 $(BOOTSECTOR):
 	cd bootsector; $(MAKE)
 
-$(HEADER): $(OBJ) $(LDSCRIPT)
-	ld -T $(LDSCRIPT) $(OBJ) -o $(HEADER) --oformat binary -Map $(MAP)
-
-$(OBJ): header.S
-	clang --target=i686-elf -c header.S -ggdb3
+$(HEADER): $(OBJS) $(LDSCRIPT)
+	ld -T $(LDSCRIPT) $(OBJS) -o $(HEADER) --oformat binary -Map $(MAP)
 
 run: $(BOOT)
 	qemu-system-i386 -fda $(BOOT) $(QEMUFLAGS)
@@ -38,4 +43,4 @@ run: $(BOOT)
 clean:
 	cd loader; $(MAKE) clean
 	cd bootsector; $(MAKE) clean
-	rm -f $(HEADER) $(OBJ) $(MAP) $(BOOT)
+	rm -f $(HEADER) $(OBJS) $(MAP) $(BOOT)

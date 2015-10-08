@@ -19,9 +19,11 @@ _start:
 	int	$0x13
 
 #	cld
+# below function don't return.
+    call main
 
-    movw $error, %si
-    jmp msg_loop
+#    movw $error, %si
+#    jmp msg_loop
 
 msg_loop:
 	lodsb
