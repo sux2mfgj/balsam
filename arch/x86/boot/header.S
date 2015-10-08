@@ -47,7 +47,10 @@ setup_sect_size:
     .byte 1
 
     .section ".boot_flag", "a"
-boot_flag:	.word 0xAA55
+boot_flag:	
+    .byte 0x54
+    .byte 0xaa
+    
 # 512 byte
 # loader jump below
     .text
@@ -59,3 +62,19 @@ _start:
 	movb	$0x80, %dl
 	int	$0x13
 
+# %ds = %es
+    movw	%ds, %ax
+	movw	%ax, %es
+	cld
+
+    movw $error, %si
+    jmp msg_loop
+	
+exit:
+    hlt
+    jmp exit
+
+    .data
+error:
+    .ascii "kernel panic!\r\n"
+    .byte 0

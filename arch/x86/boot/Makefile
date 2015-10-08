@@ -25,9 +25,6 @@ $(OBJ): header.S
 run: $(BOOT)
 	qemu-system-i386 -fda $(BOOT) $(QEMUFLAGS)
 
-
 clean:
 	cd loader; $(MAKE) clean
 	rm -f $(HEADER) $(OBJ) $(MAP)
-	
-

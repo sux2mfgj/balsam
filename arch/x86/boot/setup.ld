@@ -15,4 +15,5 @@ SECTIONS
     .boot_flag : { *(.boot_flag)}
 
     .text : { *(.text)}
+    .data : { *(.date)}
 }
