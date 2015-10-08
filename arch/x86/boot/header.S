@@ -7,14 +7,16 @@ _start:
     movw %cs, %ax
     movw %ax, %ds
     movw %ax, %es
+
+    movw $0x0000, %ax
     movw %ax, %ss
-    movw $0x0, %sp
+    movw $0x8000, %sp
     sti
 
     # reset all disk controller
-#    movw	$0x0000, %ax
-#	movb	$0x80, %dl
-#	int	$0x13
+    movw	$0x0000, %ax
+	movb	$0x80, %dl
+	int	$0x13
 
 #	cld
 
