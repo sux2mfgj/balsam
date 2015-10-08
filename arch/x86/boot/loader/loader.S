@@ -8,7 +8,7 @@ BOOTSEG = 0x7c0
 ljmp    $BOOTSEG, $start
 start:
     cli
-    xorw %ax, %ax
+#xorw %ax, %ax
    
     movw %cs, %ax
     movw %ax, %ds
@@ -24,7 +24,7 @@ load_bootsector:
     movw %ax,%es        
     movb $0, %ch # cylinder 0
     movb $0, %dh # head 0
-    movb $1, %cl # sector 1
+    movb $2, %cl # sector 2
 
     movb $0x02, %ah # read 
     movb $1, %al # 1 sector
@@ -45,7 +45,7 @@ load_kernel_setup:
     movw %ax,%es        
     movb $0, %ch # cylinder 0
     movb $0, %dh # head 0
-    movb $2, %cl # sector 2
+    movb $3, %cl # sector 3
 
     movb $0x02, %ah # read 
     movb $1, %al # 1 sector
@@ -92,6 +92,6 @@ msg_ok:
     .section ".bootflag", "ax"
 bootflag:
     .byte 0x55
-    .byte 0xaa
+ ;   .byte 0xaa
 
 

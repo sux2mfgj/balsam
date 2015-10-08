@@ -5,16 +5,26 @@ QEMUFLAGS	=	-monitor stdio -gdb tcp::10000 #-S
 BOOT 	= 	boot.img
 
 LOADER 	= 	loader/loader.img
+BOOTSECTOR = bootsector/bootsector.img
 
 HEADER	=	header.img
 OBJ		= 	header.o
 MAP		= 	header.map
 LDSCRIPT=	setup.ld
 
-all:
+all: $(BOOT)
+
+$(BOOT): $(BOOTSECTOR) $(LOADER) $(HEADER)
 	cd loader; $(MAKE)
+	cd bootsector; $(MAKE)
 	$(MAKE) $(HEADER)
-	cat $(LOADER) $(HEADER) > $(BOOT)
+	cat $(LOADER) $(BOOTSECTOR) $(HEADER) > $(BOOT)
+
+$(LOADER): 
+	cd loader; $(MAKE)
+
+$(BOOTSECTOR):
+	cd bootsector; $(MAKE)
 
 $(HEADER): $(OBJ) $(LDSCRIPT)
 	ld -T $(LDSCRIPT) $(OBJ) -o $(HEADER) --oformat binary -Map $(MAP)
@@ -27,4 +37,5 @@ run: $(BOOT)
 
 clean:
 	cd loader; $(MAKE) clean
-	rm -f $(HEADER) $(OBJ) $(MAP)
+	cd bootsector; $(MAKE) clean
+	rm -f $(HEADER) $(OBJ) $(MAP) $(BOOT)

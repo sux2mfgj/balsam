@@ -1,3 +1,11 @@
+    .text
+    .byte 0
+
+    .section ".boot_flag", "a"
+boot_flag:
+    .byte 0x55
+    .byte 0xaa
+    
     .section ".setup_text", "ax"
 real_mode_entry:
     cli
@@ -14,7 +22,8 @@ real_mode_entry:
 msg_loop:
     lodsb
     andb %al, %al
-    jz reboot
+#    jz reboot
+    jz hlt
     movb $0xe, %ah
 #movw $7, %bx 
     int $0x10
@@ -25,6 +34,10 @@ reboot:
 	int	$0x16
 	int	$0x19
 	ljmpw $0xf000, $0xfff0	
+
+hlt:
+    hlt
+    jmp hlt
 
     .section ".setup_data", "a"
 msg:
