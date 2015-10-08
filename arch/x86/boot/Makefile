@@ -1,7 +1,8 @@
 CC			:= clang
 
 QEMUFLAGS	:=	-monitor stdio -gdb tcp::10000 #-S
-CFLAGS		:=	-Wall -g --target=i686-elf 
+GASFLAGS    := 	-Wall -g --target=i686-elf 
+CFLAGS		:= $(GASFLAGS) -I./
 
 BOOT 		:= 	boot.img
 
@@ -44,3 +45,5 @@ clean:
 	cd loader; $(MAKE) clean
 	cd bootsector; $(MAKE) clean
 	rm -f $(HEADER) $(OBJS) $(MAP) $(BOOT)
+
+main.c: util.h header.o
