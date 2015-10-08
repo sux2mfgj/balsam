@@ -50,13 +50,7 @@ load_kernel_setup:
     int $0x13
     jc error
 
-check_version:
-    movw $0x800, %ax
-    movw %ax, %es
-    movw %es:0x206, %ax
-    cmpw $0x20a, %ax
     je reboot
-    jmp error
 
 error:
     movw $msg, %si

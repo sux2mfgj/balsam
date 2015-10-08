@@ -1,14 +1,16 @@
 
-QEMUFLAGS=-monitor stdio -gdb tcp::10000 #-S
+QEMUFLAGS	=	-monitor stdio -gdb tcp::10000 #-S
 
-LOADER=loader.img
+LOADER		=	loader.img
+OBJ			=	loader.o
+MAP			= 	bootloader.map
 
 all: $(LOADER)
 
-$(LOADER): loader.o
-	ld -T setup.ld loader.o -o $(LOADER) --oformat binary -Map bootloader.map
+$(LOADER): $(OBJ)
+	ld -T setup.ld $(OBJ) -o $(LOADER) --oformat binary -Map $(MAP)
 
-loader.o: loader.S
+$(OBJ): loader.S
 	clang --target=i686-elf -c loader.S -v -ggdb3
 
 run: $(LOADER)
@@ -16,4 +18,4 @@ run: $(LOADER)
 
 
 clean:
-	rm -f $(LOADER) loader.o
+	rm -f $(LOADER) $(OBJ) $(MAP)
