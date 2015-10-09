@@ -15,14 +15,45 @@ _start:
     sti
 
     # reset all disk controller
+reset_disk_controller:
     movw $0x0000, %ax
 	movb $0x80, %dl
 	int	$0x13
 
 	cld
-# below function don't return.
-    call main
+
+setup_video:
+    movb $0x13, %al
+    movb $0x00, %ah
+    int $0x10
+
+enable_a20:
+    cli
+
+    call a20wait
+    movb $0xd1, %al
+    outb %al, $0x64
+
+    call a20wait
+    movb $0xdf, %al
+    outb %al, $0x60
+
+    call a20wait
+    movb $0xff, %al
+    outb %al, $0x64
+    
+    call a20wait
+
     jmp hlt_loop
+
+a20wait:
+    inb $0x64, %al 
+    testb $2, %al
+    jnz a20wait
+    ret
+
+# below function don't return.
+#     call main
 
     movw $error, %si
     movb $0x0, %dl
