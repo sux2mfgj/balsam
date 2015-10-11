@@ -7,7 +7,7 @@ CFLAGS		:= $(GASFLAGS) -I./
 BOOT 		:= 	boot.img
 
 LOADER 		:= 	loader/loader.img
-BOOTSECTOR 	:= bootsector/bootsector.img
+BOOTSECTOR 	:= 	bootsector/bootsector.img
 
 HEADER		:=	header.img
 OBJS		:= 	header.o main.o
