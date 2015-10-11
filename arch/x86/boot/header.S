@@ -44,13 +44,28 @@ enable_a20:
     
     call a20wait
 
-    jmp hlt_loop
+    jmp mask_all_interrupt
 
 a20wait:
     inb $0x64, %al 
     testb $2, %al
     jnz a20wait
     ret
+
+mask_all_interrupt:
+
+# mask all interrupts on the secondary PIC
+    movb 0xff, %al 
+    outb %al, $0xa1
+
+# mask all interrupts on the primary PIC
+    movb 0xff, %al 
+    outb %al, $0x21
+
+    jmp hlt_loop
+
+
+
 
 # below function don't return.
 #     call main
