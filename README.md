@@ -5,6 +5,7 @@ balsam is Operating System and, use the Linux kernel as reference.
 Kernel Image
 ---
 
+```
 BOOT=arch/x86/boot  
 +-----------------------------------+ 0 Byte  
 | $(BOOT)/loader/loader.img         |   
@@ -13,6 +14,7 @@ BOOT=arch/x86/boot
 +-----------------------------------+ 1024 Byte  
 | $(BOOT)/header.img                |  
 +-----------------------------------+ X Byte  
+```
 
 
 License
