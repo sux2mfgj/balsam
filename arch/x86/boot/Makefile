@@ -24,8 +24,8 @@ LDSCRIPT	:=	setup.ld
 all: $(BOOT)
 
 $(BOOT): $(BOOTSECTOR) $(LOADER) $(HEADER)
-	cd loader; $(MAKE)
-	cd bootsector; $(MAKE)
+#      cd loader; $(MAKE)
+#      cd bootsector; $(MAKE)
 	$(MAKE) $(HEADER)
 	cat $(LOADER) $(BOOTSECTOR) $(HEADER) > $(BOOT)
 

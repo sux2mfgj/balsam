@@ -1,11 +1,15 @@
 #.file "loader.S"
     .code16
 
-BOOTSEG = 0x7c0
+BOOTSECT = 0x7c0
+KERNEL_HEAD = 0x7e0
+SETUP_HEAD = 0x800
+
+
 
     .section ".bstext", "ax"
 
-ljmp    $BOOTSEG, $start
+ljmp    $BOOTSECT, $start
 start:
     cli
 #xorw %ax, %ax
@@ -20,7 +24,7 @@ start:
     sti
 
 load_bootsector:
-    movw $0x820, %ax
+    movw $KERNEL_HEAD, %ax
     movw %ax,%es        
     movb $0, %ch # cylinder 0
     movb $0, %dh # head 0
@@ -41,7 +45,7 @@ check_boot_flg:
     jmp msg_loop
 
 load_kernel_setup:
-    movw $0x840, %ax
+    movw $SETUP_HEAD, %ax
     movw %ax,%es        
     movb $0, %ch # cylinder 0
     movb $0, %dh # head 0
@@ -55,7 +59,7 @@ load_kernel_setup:
     jc error
 
 # jmp reboot
-    ljmpw $0x0840, $0x0000 # jump to _start(kernel)
+    ljmpw $SETUP_HEAD, $0x0000 # jump to _start(kernel)
 #    ljmpw $0x0000, $0x8400 # jump to _start(kernel)
 
 

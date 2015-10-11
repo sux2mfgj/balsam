@@ -22,10 +22,12 @@ reset_disk_controller:
 
 	cld
 
+    /*
 setup_video:
     movb $0x13, %al
     movb $0x00, %ah
     int $0x10
+    */
 
 enable_a20:
     cli
@@ -53,7 +55,6 @@ a20wait:
     ret
 
 mask_all_interrupt:
-
 # mask all interrupts on the secondary PIC
     movb 0xff, %al 
     outb %al, $0xa1
@@ -62,7 +63,8 @@ mask_all_interrupt:
     movb 0xff, %al 
     outb %al, $0x21
 
-    jmp hlt_loop
+    jmp error
+#    jmp hlt_loop
 
 
 
@@ -70,10 +72,13 @@ mask_all_interrupt:
 # below function don't return.
 #     call main
 
-    movw $error, %si
-    movb $0x0, %dl
 #    jmp msg_loop
+#     movw $error, %si
+#     movb $0x0, %dl
 
+error:
+    movw $error_msg, %si
+    movb $0x0, %dl
 msg_loop:
 	lodsb
 	andb	%al, %al
@@ -90,6 +95,6 @@ hlt_loop:
     jmp hlt_loop
 
     .section ".realdata", "a"
-error:
+error_msg:
     .ascii "kernel panic"
     .byte 0
