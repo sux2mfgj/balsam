@@ -1,12 +1,6 @@
-#ifndef _INCLUDED_UTIL_H_
-#define _INCLUDED_UTIL_H_
+#pragma once
 
-static inline void hlt(void)
-{
-    asm volatile("hlt");
-}
+extern void io_hlt(void);
+extern void protected_mode_jump(void);
+extern void temp_kernel_load(void);
 
-extern inline void protected_mode_jump(void);
-static inline void temp_kernel_load(void);
-
-#endif

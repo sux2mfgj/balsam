@@ -1,5 +1,4 @@
-#ifndef _ASM_X86_PROCESSOR_FLAGS_H
-#define _ASM_X86_PROCESSOR_FLAGS_H
+#pragma once
 
 #define X86_CR0_PE	0x00000001 /* Protection Enable */
 #define X86_CR0_MP	0x00000002 /* Monitor Coprocessor */
@@ -13,4 +12,3 @@
 #define X86_CR0_CD	0x40000000 /* Cache Disable */
 #define X86_CR0_PG	0x80000000 /* Paging */
 
-#endif /* _ASM_X86_PROCESSOR_FLAGS_H */

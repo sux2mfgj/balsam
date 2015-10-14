@@ -11,7 +11,6 @@ struct gdt_ptr {
 
 static void setup_gdt(void)
 {
-
     // flat memory model
 	static const uint64_t boot_gdt[] __attribute__((aligned(16))) = {
 	    [GDT_ENTRY_BOOT_CS] = GDT_ENTRY(0xc09b, 0, 0xfffff), 
@@ -31,8 +30,11 @@ static void setup_idt(void)
 	asm volatile("lidtl %0" : : "m" (null_idt));
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wmain-return-type"
 void main(void)
 {
+#pragma clang diagnostic pop
     setup_idt();
     setup_gdt();
     protected_mode_jump();

@@ -5,8 +5,6 @@ BOOTSECT = 0x7c0
 KERNEL_HEAD = 0x7e0
 SETUP_HEAD = 0x800
 
-
-
     .section ".bstext", "ax"
 
 ljmp    $BOOTSECT, $start

@@ -89,6 +89,11 @@ finish:
     hlt
     jmp finish
 
+    .global hlt
+io_hlt: #void io_hlt(void);
+    hlt
+    ret
+
     .section ".realdata", "a"
 error_msg:
     .ascii "kernel panic"

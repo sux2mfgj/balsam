@@ -1,5 +1,4 @@
-#ifndef _ASM_STRING_H
-#define _ASM_STRING_H
+#pragma once
 
 #include <stddef.h>
 
@@ -20,4 +19,3 @@ static inline void * __memcpy(void* to, const void* from, size_t n)
     return to;
 }
 
-#endif //_ASM_STRING_H
