@@ -24,6 +24,8 @@ reset_disk_controller:
 
 	cld
 
+    call temp_load_kernel
+
     /*
 setup_video:
     movb $0x13, %al

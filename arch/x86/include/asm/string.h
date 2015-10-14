@@ -19,3 +19,12 @@ static inline void * __memcpy(void* to, const void* from, size_t n)
     return to;
 }
 
+
+#define memcpy(t, f, n) __memcpy((t), (f), (n))
+
+//TODO:
+//KMEMCHECK 
+// #define memcpy(t, f, n)             \
+//     (__builtin_constant_p((n))      \
+//      ? __constant_memcpy((t), (f), (n)) \
+//      : __memcpy((t), (f), (n)))
