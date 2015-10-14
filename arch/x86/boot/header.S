@@ -1,3 +1,5 @@
+#include <asm/processor-flags.h>
+
 # 512 byte
 # loader jump below
     .section ".realtext", "ax"
@@ -63,14 +65,33 @@ mask_all_interrupt:
     movb 0xff, %al 
     outb %al, $0x21
 
-    jmp error
-#    jmp hlt_loop
+# setup gdt
+#    lgdt gdtr_data
+
+#    movl %cr0, %eax
+#    orb $X86_CR0_PE, %al
+#    movl %eax, %cr0 // error occred
+#    jmp flush
+#
+#flush:
+#    movw $0, %ax
+#    movw %ax, %cs
+#    movw %ax, %ds
+#    movw %ax, %es
+#    movw %ax, %fs
+#    movw %ax, %gs
+#    movw %ax, %ss
+
+
+#    jmp finish
+#    jmp error
 
 
 
 
 # below function don't return.
-#     call main
+    call main
+    jmp finish
 
 #    jmp msg_loop
 #     movw $error, %si
@@ -83,18 +104,19 @@ msg_loop:
 	lodsb
 	andb	%al, %al
 #	jz	reboot
-    jz hlt_loop
+    jz finish
 	movb	$0xe, %ah
 # movw	$7, %bx
 	int	$0x10
 	jmp	msg_loop
 
-.global hlt_loop
-hlt_loop:
+finish:
     hlt
-    jmp hlt_loop
+    jmp finish
 
     .section ".realdata", "a"
 error_msg:
     .ascii "kernel panic"
     .byte 0
+
+
