@@ -1,16 +1,17 @@
-CC			:= clang
-LD  		:= ld
+CC			:=	clang
+LD  		:= 	ld
 
 GASFLAGS    := 	-Wall -g --target=i686-elf 
-CFLAGS		:= $(GASFLAGS) -I./
+CFLAGS		:= 	$(GASFLAGS) -I./
 LDFLAGS 	:=
 
 LDSCRIPT	:=	setup.ld
-MAP 		:= kernel.map
+MAP 		:= 	kernel.map
 
 KERNEL		:= 	kernel.img
 
-OBJS 		:= head.o
+ARCH_OBJS 	:= 	head.o
+OBJS 		:= 	#../../../kernel/
 
 .SUFFIXES: .S .c .o
 .S.o:
@@ -18,12 +19,15 @@ OBJS 		:= head.o
 .c.o:
 	$(CC) $(CFLAGS) -c $<
 
-
 all: $(KERNEL)
 
-$(KERNEL): $(OBJS)
-	$(LD) -T $(LDSCRIPT) $(OBJS) -o $@ --oformat binary -Map $(MAP)
+$(KERNEL): $(ARCH_OBJS) $(OBJS)
+	$(LD) -T $(LDSCRIPT) $(ARCH_OBJS) $(OBJS) -o $@ --oformat binary -Map $(MAP)
+
+$(OBJS):
+	cd ../../../kernel; $(MAKE)
 
 clean:
+	cd ../../../kernel; $(MAKE) clean
 	rm -f $(KERNEL) $(MAP) *.o
 

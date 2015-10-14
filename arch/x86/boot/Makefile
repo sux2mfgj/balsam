@@ -1,7 +1,7 @@
 CC			:= clang
 
 QEMUFLAGS	:=	-monitor stdio -gdb tcp::10000 #-S
-GASFLAGS    := 	-Wall -g --target=i686-elf 
+GASFLAGS    := 	-Wall -g --target=i686-elf
 CFLAGS		:= $(GASFLAGS) -I./ -I../include
 
 BOOT 		:= 	boot.img
@@ -10,7 +10,7 @@ LOADER 		:= 	loader/loader.img
 BOOTSECTOR 	:= 	bootsector/bootsector.img
 
 HEADER		:=	header.img
-OBJS		:= 	header.o main.o protected_mode_jump.o
+OBJS		:= 	header.o main.o protected_mode_jump.o load.o
 MAP			:= 	header.map
 LDSCRIPT	:=	setup.ld
 
@@ -20,12 +20,9 @@ LDSCRIPT	:=	setup.ld
 .c.o:
 	$(CC) $(CFLAGS) -c $<
 
-
 all: $(BOOT)
 
 $(BOOT): $(BOOTSECTOR) $(LOADER) $(HEADER)
-#      cd loader; $(MAKE)
-#      cd bootsector; $(MAKE)
 	$(MAKE) $(HEADER)
 	cat $(LOADER) $(BOOTSECTOR) $(HEADER) > $(BOOT)
 

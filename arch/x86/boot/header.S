@@ -65,33 +65,8 @@ mask_all_interrupt:
     movb 0xff, %al 
     outb %al, $0x21
 
-# setup gdt
-#    lgdt gdtr_data
-
-#    movl %cr0, %eax
-#    orb $X86_CR0_PE, %al
-#    movl %eax, %cr0 // error occred
-#    jmp flush
-#
-#flush:
-#    movw $0, %ax
-#    movw %ax, %cs
-#    movw %ax, %ds
-#    movw %ax, %es
-#    movw %ax, %fs
-#    movw %ax, %gs
-#    movw %ax, %ss
-
-
-#    jmp finish
-#    jmp error
-
-
-
-
 # below function don't return.
     call main
-    jmp finish
 
 #    jmp msg_loop
 #     movw $error, %si

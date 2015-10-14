@@ -1,12 +1,10 @@
 BOOT	:=	boot/boot.img
 KERNEL	:=	kernel/kernel.img
-BALSAM	:= 	balsam.img
+BALSAM	:= 	balsam
 
 all: $(BALSAM)
 
 $(BALSAM): $(BOOT) $(KERNEL)
-#      cd boot; $(MAKE)
-#      cd kernel; $(MAKE)
 	cat $(BOOT) $(KERNEL) > $@
 
 $(BOOT): 
@@ -14,7 +12,6 @@ $(BOOT):
 
 $(KERNEL):
 	cd kernel; $(MAKE)
-
 
 clean:
 	cd boot; $(MAKE) clean
