@@ -1,7 +1,14 @@
 #include <asm/processor-flags.h>
+#include <asm/segment.h>
+
+REAL_MODE_IMAGE_BASE        =   0x00008200
+PROTECTED_MODE_IMAGE_BASE   =   0x00100000
+KERNEL_SIZE                 =   0x1000
+
 
 # 512 byte
 # loader jump below
+    .code16
     .section ".realtext", "ax"
     .global _start
 _start:
@@ -25,7 +32,7 @@ reset_disk_controller:
 	cld
 
     call temp_load_kernel
-
+    
     /*
 setup_video:
     movb $0x13, %al
@@ -67,8 +74,36 @@ mask_all_interrupt:
     movb 0xff, %al 
     outb %al, $0x21
 
+
+    lgdt gdtr
+
+# go to protected mode
+    movl %cr0, %eax
+    orb $X86_CR0_PE, %al
+    movl %eax, %cr0
+
+    jmp flush
+flush:
+
+
+    mov $__BOOT_CS, %eax
+    mov %eax, %ds
+    mov %eax, %es
+    mov %eax, %fs
+    mov %eax, %gs
+    mov %eax, %ss
+
+copy_kernel:
+    cld
+    movl $REAL_MODE_IMAGE_BASE, %esi
+    movl $PROTECTED_MODE_IMAGE_BASE, %edi
+    movl $KERNEL_SIZE, %ecx
+    rep movsd
+
+    ljmpl $16, $PROTECTED_MODE_IMAGE_BASE
+
 # below function don't return.
-    call main
+#    call main
 
 #    jmp msg_loop
 #     movw $error, %si
@@ -101,4 +136,11 @@ error_msg:
     .ascii "kernel panic"
     .byte 0
 
+gdt:
+    .word 0x0000, 0x0000, 0x0000, 0x0000
+    .word 0xffff, 0x0000, 0x9b00, 0x00cf
+    .word 0xffff, 0x0000, 0x9300, 0x00cf
 
+gdtr:
+    .word gdtr - gdt - 1
+    .long gdt

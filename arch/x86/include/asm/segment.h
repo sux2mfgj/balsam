@@ -8,7 +8,7 @@
 	 (((limit) & 0x0000ffffULL)))
 
 
-#define GDT_ENTRY_BOOT_CS 2
+#define GDT_ENTRY_BOOT_CS 1
 #define __BOOT_CS (GDT_ENTRY_BOOT_CS * 8)
 
 #define GDT_ENTRY_BOOT_DS (GDT_ENTRY_BOOT_CS + 1)

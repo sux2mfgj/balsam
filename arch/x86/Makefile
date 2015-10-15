@@ -1,11 +1,11 @@
-BOOT	:=	boot/boot.img
-KERNEL	:=	kernel/kernel.img
-BALSAM	:= 	balsam
+BOOT		:=	boot/boot.img
+KERNEL		:=	kernel/kernel.img
+BALSAM		:= 	balsam
 
 all: $(BALSAM)
 
 $(BALSAM): $(BOOT) $(KERNEL)
-	cat $(BOOT) $(KERNEL) > $@
+	#cat $(BOOT) $(KERNEL) > $@
 
 $(BOOT): 
 	cd boot; $(MAKE)

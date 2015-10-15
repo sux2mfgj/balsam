@@ -5,7 +5,7 @@ CYLINDERS           = 10
     .code16
     .global temp_load_kernel
 
-temp_load_kernel:
+temp_load_kernel: # void temp_load_kernel(void);
     movw $TEMP_KERNEL_HEAD, %ax
     movw %ax,%es        
     movb $0, %ch # cylinder 0

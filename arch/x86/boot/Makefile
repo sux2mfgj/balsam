@@ -10,7 +10,7 @@ LOADER 		:= 	loader/loader.img
 BOOTSECTOR 	:= 	bootsector/bootsector.img
 
 HEADER		:=	header.img
-OBJS		:= 	header.o main.o protected_mode_jump.o load.o
+OBJS		:= 	header.o main.o protected_mode_jump.o load.o 
 MAP			:= 	header.map
 LDSCRIPT	:=	setup.ld
 

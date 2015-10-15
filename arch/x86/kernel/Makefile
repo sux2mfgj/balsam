@@ -2,15 +2,15 @@ CC			:=	clang
 LD  		:= 	ld
 
 GASFLAGS    := 	-Wall -g --target=i686-elf 
-CFLAGS		:= 	$(GASFLAGS) -I./
+CFLAGS		:= 	$(GASFLAGS) -I./ -I../include/
 LDFLAGS 	:=
 
-LDSCRIPT	:=	setup.ld
+LDSCRIPT	:=	kernel.ld
 MAP 		:= 	kernel.map
 
 KERNEL		:= 	kernel.img
 
-ARCH_OBJS 	:= 	head.o
+ARCH_OBJS 	:= 	main.o util.o
 OBJS 		:= 	#../../../kernel/
 
 .SUFFIXES: .S .c .o
