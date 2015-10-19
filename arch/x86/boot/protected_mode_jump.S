@@ -29,7 +29,7 @@ flush:
 copy_kernel:
     
     movl $__BOOT_CS, %eax
-    movl %eax, %cs
+#    movl %eax, %cs
     movl %eax, %ds
     movl %eax, %es
     movl %eax, %fs

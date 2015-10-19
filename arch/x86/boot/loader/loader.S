@@ -60,7 +60,6 @@ load_kernel_setup:
     ljmpw $SETUP_HEAD, $0x0000 # jump to _start(kernel)
 #    ljmpw $0x0000, $0x8400 # jump to _start(kernel)
 
-
 error:
     movw $msg, %si
 msg_loop:

@@ -33,12 +33,10 @@ reset_disk_controller:
 
     call temp_load_kernel
     
-    /*
-setup_video:
-    movb $0x13, %al
-    movb $0x00, %ah
-    int $0x10
-    */
+#setup_video:
+#    movb $0x13, %al
+#    movb $0x00, %ah
+#    int $0x10
 
 enable_a20:
     cli
@@ -75,23 +73,27 @@ mask_all_interrupt:
     outb %al, $0x21
 
 
-    lgdt gdtr
+    lgdt (gdtr)
 
 # go to protected mode
     movl %cr0, %eax
-    orb $X86_CR0_PE, %al
+    andl $0x7fffffff, %eax  # disable paging
+    orb $X86_CR0_PE, %al    # go to protected mode
     movl %eax, %cr0
 
+    hlt
     jmp flush
 flush:
 
+    .code32
+    movl $1*8, %eax
+    movl %eax, %ds
+    movl %eax, %es
+    movl %eax, %fs
+    movl %eax, %gs
+    movl %eax, %ss
+    hlt
 
-    mov $__BOOT_CS, %eax
-    mov %eax, %ds
-    mov %eax, %es
-    mov %eax, %fs
-    mov %eax, %gs
-    mov %eax, %ss
 
 copy_kernel:
     cld
@@ -100,7 +102,7 @@ copy_kernel:
     movl $KERNEL_SIZE, %ecx
     rep movsd
 
-    ljmpl $16, $PROTECTED_MODE_IMAGE_BASE
+    ljmpl $2*8, $PROTECTED_MODE_IMAGE_BASE
 
 # below function don't return.
 #    call main
@@ -136,11 +138,35 @@ error_msg:
     .ascii "kernel panic"
     .byte 0
 
+
+    .align 8
 gdt:
-    .word 0x0000, 0x0000, 0x0000, 0x0000
-    .word 0xffff, 0x0000, 0x9b00, 0x00cf
-    .word 0xffff, 0x0000, 0x9300, 0x00cf
+    .skip 8, 0x00
+
+    # Data Segment
+    .word 0xffff, 0x0000, 0x9200, 0x00cf # read and writeable
+    # Code Segment
+    .word 0xffff, 0x0000, 0x9a00, 0x0047 # executable
+
+    .word 0x0000
 
 gdtr:
-    .word gdtr - gdt - 1
-    .long gdt
+    .word 8*3-1
+    .int gdt
+
+#.code32
+#    .p2align 4
+#gdt:
+#    // Null
+#    .byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+#    // Code Segment
+#    .byte 0xff, 0xff, 0x00, 0x00, 0x00, 0x9a, 0xcf, 0x00
+#    // Data Segment
+#    .byte 0xff, 0xff, 0x00, 0x00, 0x00, 0x92, 0xcf, 0x00
+#    
+#    .byte 0
+#
+#gdtdesc:
+#    .word 23
+#gdtaddr:
+#    .word gdt
