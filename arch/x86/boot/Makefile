@@ -1,33 +1,30 @@
-CC		= clang
+BOOT 		= 	boot.img
 
-QEMUFLAGS	=	-monitor stdio -gdb tcp::10000 #-S
+LOADER 		:= 	loader/loader.img
+BOOTSECTOR 	:= 	bootsector/bootsector.img
 
-BOOT 	= 	boot.img
+HEADER		:=	header.img
 
-LOADER 	= 	loader/loader.img
+QEMUFLAGS	:=	-monitor stdio -gdb tcp::10000 #-S
 
-HEADER	=	header.img
-OBJ		= 	header.o
-MAP		= 	header.map
-LDSCRIPT=	setup.ld
+all: $(BOOT)
 
-all:
+$(BOOT): $(LOADER) $(BOOTSECTOR) $(HEADER)
+	cat $(LOADER) $(BOOTSECTOR) $(HEADER) > $@
+
+$(HEADER):
+	nasm header.asm -o header.img
+
+$(LOADER):
 	cd loader; $(MAKE)
-	$(MAKE) $(HEADER)
-	cat $(LOADER) $(HEADER) > $(BOOT)
 
-$(HEADER): $(OBJ) $(LDSCRIPT)
-	ld -T $(LDSCRIPT) $(OBJ) -o $(HEADER) --oformat binary -Map $(MAP)
-
-$(OBJ): header.S
-	clang --target=i686-elf -c header.S -ggdb3
+$(BOOTSECTOR):
+	cd bootsector; $(MAKE)
 
 run: $(BOOT)
 	qemu-system-i386 -fda $(BOOT) $(QEMUFLAGS)
 
-
 clean:
 	cd loader; $(MAKE) clean
-	rm -f $(HEADER) $(OBJ) $(MAP)
-	
-
+	cd bootsector; $(MAKE) clean
+	rm -f $(HEADER) $(BOOT)
