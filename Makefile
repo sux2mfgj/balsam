@@ -1,29 +1,46 @@
-ARCH 	:= 	x86
+ARCH		:= 	x86
 
-IMG		:=	balsam
+CC			:= 	clang
+LD 			:= 	ld
 
-BOOT_PATH	:= arch/$(ARCH)/boot
-BOOT	:= 	$(BOOT_PATH)/boot.img
+QEMU		:= qemu-system-i386
 
-KERNEL_PATH	:= arch/$(ARCH)/kernel
-KERNEL	:= 	$(KERNEL_PATH)/kernel.img
-
-QEMU    	:=	qemu-system-i386
-QEMUFLAGS	:=	-monitor stdio -gdb tcp::10000 -m 128 #-S
+CFLAGS		:=	-Wall -ggdb3 -O0 --target=i686-elf
+LDFLAGS		:=  -m elf_i386 --oformat binary 
+QEMUFLAGS	:= 	-monitor stdio -m 16M
 
 
-all: $(IMG)
+IMAGE		:= 	balsam
 
-$(IMG): $(BOOT) $(KERNEL)
-	cat $(BOOT) $(KERNLE) > $@
+BOOT_PATH	:= 	arch/$(ARCH)/boot
+BOOTIMG		:= 	$(BOOT_PATH)/boot.img
 
-$(BOOT) $(KERNEL):
-	cd arch/$(ARCH); $(MAKE)
+KERNEL_PATH	:= 	kernel
+KERNELIMG	:= 	$(KERNEL_PATH)/kernel.img
 
-run: $(IMG)
-	$(QEMU) -fda $(IMG) $(QEMUFLAGS)
 
+
+all: $(IMAGE)
+
+$(IMAGE): $(BOOTIMG) $(KERNELIMG)
+	cat $(BOOTIMG) $(KERNELIMG) > $@
+
+$(KERNELIMG):
+	cd $(KERNEL_PATH); $(MAKE)
+
+$(BOOTIMG):
+	cd $(BOOT_PATH); $(MAKE)
+
+run: $(IMAGE)
+	$(QEMU) $(QEMUFLAGS) -fda $(IMAGE)
 
 clean:
-	cd arch/$(ARCH); $(MAKE) clean
-	rm -f $(IMG)
+	cd $(BOOT_PATH); $(MAKE) clean
+	cd $(KERNEL_PATH); $(MAKE) clean
+	rm $(IMAGE)
+
+export ARCH
+export CC
+export LD
+export CFLAGS
+export LDFLAGS

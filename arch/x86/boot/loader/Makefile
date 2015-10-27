@@ -2,18 +2,19 @@
 QEMUFLAGS	=	-monitor stdio -gdb tcp::10000 #-S
 
 LOADER		=	loader.img
-OBJ			=	loader.o
-MAP			= 	bootloader.map
+#OBJ			=	loader.o
+#MAP			= 	bootloader.map
 
 all: $(LOADER)
 	$(MAKE) $(LOADER)
 	cd test; $(MAKE) 
 
-$(LOADER): $(OBJ)
-	ld -T setup.ld $(OBJ) -o $(LOADER) --oformat binary -Map $(MAP)
+$(LOADER): loader.asm
+	nasm loader.asm -o $@
+#	ld -T setup.ld $(OBJ) -o $(LOADER) --oformat binary -Map $(MAP)
 
-$(OBJ): loader.S
-	clang --target=i686-elf -c loader.S -v -ggdb3
+#$(OBJ): loader.S
+#	clang --target=i686-elf -c loader.S -v -ggdb3
 
 run: $(LOADER)
 	cd test; $(MAKE)
