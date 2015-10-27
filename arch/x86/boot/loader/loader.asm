@@ -56,7 +56,7 @@ load_kernel_main:
     mov dh, 0   ; head 0
     mov cl, 4   ; sector 4
 
-.read_loop
+.read_loop:
     mov si, 0
 
 .retry:

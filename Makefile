@@ -37,7 +37,7 @@ run: $(IMAGE)
 clean:
 	cd $(BOOT_PATH); $(MAKE) clean
 	cd $(KERNEL_PATH); $(MAKE) clean
-	rm $(IMAGE)
+	rm -f $(IMAGE)
 
 export ARCH
 export CC
