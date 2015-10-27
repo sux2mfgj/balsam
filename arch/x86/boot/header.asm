@@ -3,6 +3,11 @@ BOOTSEG                 equ     0x7c0
 SEGMENT_KERNEL_HEAD     equ     0x7e0
 SEGMENT_KERNEL_SETUP    equ     0x800
 
+TEMP_KERNEL_BASE_ADDR   equ     0x00008200
+KERNEL_ENTRY_POINT      equ     0x00100000
+
+KERNEL_SIZE             equ     0xb400 ;(180Kib / 4)(10 cylinder)
+
 [org 0x8000]
 
 bits 16
@@ -46,6 +51,8 @@ mask_all_interrupt:
 
 setup_gdt:
     lgdt [gdtr]
+
+    mov cx, (data_desc - gdt)
 
 ;     jmp error
 
@@ -108,4 +115,40 @@ gdtr:
 
 bits 32
 protected_code:
-    hlt
+
+; set data segment 
+    mov ds, ecx
+    mov es, ecx
+    mov fs, ecx
+    mov gs, ecx
+    mov ss, ecx
+
+; set stack pointer
+    mov esp, 0x7c00
+
+
+move_kernel:
+    mov esi, TEMP_KERNEL_BASE_ADDR
+    mov edi, KERNEL_ENTRY_POINT
+    mov ecx, KERNEL_SIZE    
+    mov edx, 0
+
+.loop:
+    mov eax, [esi]
+    mov [edi], eax
+    add esi, 4
+    add edi, 4
+    sub ecx, 4
+    jnz .loop
+
+; clear registers
+    xor ebx, ebx
+    xor ecx, ecx
+    xor edx, edx
+    xor ebp, ebp
+    xor edi, edi
+
+    jmp KERNEL_ENTRY_POINT
+
+times 512 - ($ - $$) db 0
+
