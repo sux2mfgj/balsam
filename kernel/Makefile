@@ -9,8 +9,8 @@ MAP			:= kernel.map
 
 all: $(IMAGE)
 
-$(IMAGE): $(OBJS)
-	$(LD) $(LDFLAGS) $(OBJS) -o $@ -T $(LDSCRIPT) -Map $(MAP)
+$(IMAGE): $(OBJS) $(LDSCRIPT)
+	$(LD) $(LDFLAGS) $(OBJS) -o $@ -T $(LDSCRIPT) 
 
 .c.o: 
 	$(CC) $(CFLAGS) $< -c
@@ -18,6 +18,9 @@ $(IMAGE): $(OBJS)
 $(ARCHOBJS):
 	cd $(ARCHPATH)/kernel; $(MAKE)
 
+$(LDSCRIPT): $(LDSCRIPT).S
+	$(CC) -P -E $< -o kernel.ld
+
 clean:
 	cd $(ARCHPATH)/kernel; $(MAKE) clean
-	rm -f $(IMAGE) $(OBJS) $(MAP)
+	rm -f $(IMAGE) $(OBJS) $(MAP) $(LDSCRIPT)
