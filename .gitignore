@@ -2,3 +2,4 @@
 *.img
 *.map
 balsam
+kernel.ld
