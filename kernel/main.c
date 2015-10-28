@@ -1,7 +1,8 @@
-int main(int argc, char const* argv[])
+
+
+void start_kernel(void)
 {
     while (1) {
         
-    }   
-    return 0;
+    }
 }
