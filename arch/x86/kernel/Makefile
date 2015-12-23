@@ -1,14 +1,17 @@
 KERNEL = kernel.img
-OBJS	:= head.o main.o
+
+LDSCRIPT := kernel.ld
+
+OBJS	:= head.o 
 
 .S.o: 
-	$(CC) -Wall -I../include --target=i686-elf -m32 $< -c
+#      $(CC) -Wall -I../include --target=i686-elf -m32 $< -c
+	$(CC) $(CFLAGS) $< -c -I../include
 
-all: $(KERNEL)
+all: $(OBJS)
 
-$(KERNEL): $(OBJS)
-	
-
+#  $(KERNEL): $(OBJS)
+#      $(LD) $(LDFLAGS) -T $(LDSCRIPT) $(OBJS)
 	
 clean:
 	rm -f $(OBJS)

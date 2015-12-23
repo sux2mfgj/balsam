@@ -37,11 +37,7 @@ startup:
 
 //    orl %eax, $0x00000003
 
-
-
-//     call setup_idt
-
-    jmp start_kernel
+    call main
 
 setup_idt:
     ret

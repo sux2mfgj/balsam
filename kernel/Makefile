@@ -1,7 +1,7 @@
 IMAGE		:= kernel.img
 
 ARCHPATH	:= ../arch/$(ARCH)
-ARCHOBJS	:= $(ARCHPATH)/kernel/head.o
+ARCHOBJS	:= #$(ARCHPATH)/kernel/
 OBJS		:= $(ARCHOBJS) main.o
 
 LDSCRIPT 	:= kernel.ld
@@ -9,7 +9,7 @@ MAP			:= kernel.map
 
 all: $(IMAGE)
 
-$(IMAGE): $(OBJS) $(LDSCRIPT)
+$(IMAGE): $(OBJS) $(ARCHOBJS) $(LDSCRIPT)
 	$(LD) $(LDFLAGS) $(OBJS) -o $@ -T $(LDSCRIPT) 
 
 .c.o: 

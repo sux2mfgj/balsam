@@ -49,12 +49,15 @@ mask_all_interrupt:
     mov al, 0xff
     out 0x21, al
 
+setup_screen:
+    mov ah, 0x00
+    mov al, 0x03
+    int 0x10
+
 setup_gdt:
     lgdt [gdtr]
 
     mov cx, (data_desc - gdt)
-
-;     jmp error
 
 protected_mode_jump:
     mov eax, cr0
