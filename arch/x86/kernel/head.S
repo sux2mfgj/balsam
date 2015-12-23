@@ -33,13 +33,13 @@ startup:
     // setup page directory
     movl $pa(swapper_pg_dir), %edi
     movl $pa(swapper_pg_table), %edx
-    shll $%edx, %eax
+//     shll %edx, %eax
 
-    orl %eax, $0x00000003
+//    orl %eax, $0x00000003
 
 
 
-    call setup_idt
+//     call setup_idt
 
     jmp start_kernel
 

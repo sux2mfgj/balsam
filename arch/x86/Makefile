@@ -5,7 +5,7 @@ BALSAM		:= 	balsam
 all: $(BALSAM)
 
 $(BALSAM): $(BOOT) $(KERNEL)
-	#cat $(BOOT) $(KERNEL) > $@
+	cat $(BOOT) $(KERNEL) > $@
 
 $(BOOT): 
 	cd boot; $(MAKE)

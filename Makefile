@@ -7,7 +7,7 @@ QEMU		:= qemu-system-i386
 
 CFLAGS		:=	-Wall -ggdb3 -O0 --target=i686-elf
 LDFLAGS		:=  -m elf_i386 --oformat binary 
-QEMUFLAGS	:= 	-monitor stdio -m 16M
+QEMUFLAGS	:= 	-monitor stdio -m 16M -nographic -curses -gdb tcp::10000 -S
 
 
 IMAGE		:= 	balsam
