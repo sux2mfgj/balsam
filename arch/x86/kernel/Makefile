@@ -1,5 +1,10 @@
-all:
-	$(CC) -Wall --target=i686-elf -m32 head.S -c
+
+OBJS	:= head.o
+
+.S.o: 
+	$(CC) -Wall -I../include --target=i686-elf -m32 $< -c
+
+all: $(OBJS)
 	
 clean:
-	rm -f head.o
+	rm -f $(OBJS)

@@ -65,6 +65,12 @@ before kernel entry point
 
 ```
 
+swapper page directory
+---
+```
+
+```
+
 License
 ---
 Copyright (c) 2015 Shunsuke Mie  
