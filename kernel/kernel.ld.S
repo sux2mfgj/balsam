@@ -1,4 +1,4 @@
-ENTRY(start_kernel)
+ENTRY(startup_32)
 OUTPUT_ARCH(i386)
 OUTPUT_FORMAT(elf32-i386)
 
@@ -12,27 +12,44 @@ SECTIONS
 
     _kernel_start = .;
 
-    .text : AT(ADDR(.text) - LOAD_OFFSET){ 
-        *(.text);
+    _test = .;
+    .text : {
+        *(.text)
     }
+    _etext = .;
 
-    . = ALIGN(PAGE_SIZE);
-    .data : AT(ADDR(.data) - LOAD_OFFSET){ 
-        *(.data.pg_dir);
-        *(.data);
+    . = ALIGN(16);
+
+/*    .text : AT(ADDR(.text) - LOAD_OFFSET){ 
+         *(.text);
+     }*/
+
+    .data : {
+        *(.data)
     }
+/*     . = ALIGN(PAGE_SIZE);
+     .data : AT(ADDR(.data) - LOAD_OFFSET){ 
+         *(.data);
+     }*/
 
-    . = ALIGN(PAGE_SIZE);
-    .bss : AT(ADDR(.bss) - LOAD_OFFSET){
-        *(.bss.pg_pmd);
-        *(.bss);
+    __bss_start = .;      /* BSS */
+    .bss : {
+          *(.bss.page_aligned)
+                *(.bss)
+                
     }
+    . = ALIGN(4);
+    __bss_stop = .;
 
-    .brk : AT(ADDR(.brk) - LOAD_OFFSET){
+    . = ALIGN(4096);
+    pg0 = .;
+
+/*    .brk : AT(ADDR(.brk) - LOAD_OFFSET){
         __brk_base = .;
         . += 64 * 1024;
         __brk_limit = .;
     }
+    */
 
     _kernel_end = .;
 }

@@ -1,2 +1,2 @@
 target remote localhost:10000
-file balsam
+file kernel/kernel.debug

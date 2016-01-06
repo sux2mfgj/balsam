@@ -5,9 +5,14 @@ LD 			:= 	ld
 
 QEMU		:= qemu-system-i386
 
-CFLAGS		:=	-Wall -ggdb3 -O0 --target=i686-elf
+CFLAGS		:=	-Wall -O0 --target=i686-elf
 LDFLAGS		:=  -m elf_i386 --oformat binary
-QEMUFLAGS	:= 	-monitor stdio -m 16M -nographic -curses -gdb tcp::10000 -S
+DEBUG_LDFLAGS := -m elf_i386
+#  QEMUEXTRA 	:= 	-curses
+#QEMUEXTRA 	:= 	-serial mon:stdio	
+#  QEMUFLAGS	:= 	-monitor stdio -m 16M -nographic -gdb tcp::10000 -S $(QEMUEXTRA)
+QEMUFLAGS	:= 	-m 16M -nographic -gdb tcp::10000 -S $(QEMUEXTRA)
+
 
 IMAGE		:= 	balsam
 

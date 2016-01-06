@@ -1,17 +1,11 @@
-KERNEL = kernel.img
-
-LDSCRIPT := kernel.ld
-
-OBJS	:= head.o 
+#MM_OBJS := ../mm/distconfig.o
+OBJS	:= head_32.o setup.o $(MM_OBJS)
 
 .S.o: 
 #      $(CC) -Wall -I../include --target=i686-elf -m32 $< -c
-	$(CC) $(CFLAGS) $< -c -I../include
+	$(CC) $(CFLAGS) $< -c -I../include -I../../../include
 
 all: $(OBJS)
-
-#  $(KERNEL): $(OBJS)
-#      $(LD) $(LDFLAGS) -T $(LDSCRIPT) $(OBJS)
 	
 clean:
 	rm -f $(OBJS)

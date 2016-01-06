@@ -50,6 +50,7 @@ mask_all_interrupt:
     out 0x21, al
 
 setup_screen:
+; text mode 80x25 color 
     mov ah, 0x00
     mov al, 0x03
     int 0x10
@@ -91,8 +92,9 @@ a20wait:
 
 gdt:
 ; null 
-    dd 0
-    dd 0
+     dw 0, 0, 0, 0
+; null 
+     dw 0, 0, 0, 0
 
 code_desc:
 ; code
@@ -128,7 +130,6 @@ protected_code:
 
 ; set stack pointer
     mov esp, 0x7c00
-
 
 move_kernel:
     mov esi, TEMP_KERNEL_BASE_ADDR
