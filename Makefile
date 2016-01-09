@@ -1,6 +1,7 @@
 ARCH		:= 	x86
 
 CC			:= 	clang
+#  CC			:= 	gcc
 LD 			:= 	ld
 
 QEMU		:= qemu-system-i386

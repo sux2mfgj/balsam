@@ -2,7 +2,7 @@ IMAGE		:= kernel.img
 DEBUG_OBJ   := kernel.debug
 
 ARCHPATH	:= ../arch/$(ARCH)
-ARCHOBJS	:= $(ARCHPATH)/kernel/head_32.o $(ARCHPATH)/kernel/setup.o 
+ARCHOBJS	:= $(ARCHPATH)/kernel/head_32.o $(ARCHPATH)/kernel/setup.o $(ARCHPATH)/kernel/init_task.o
 OBJS		:= $(ARCHOBJS) main.o
 
 LDSCRIPT 	:= kernel.ld
@@ -23,7 +23,7 @@ $(ARCHOBJS):
 	cd $(ARCHPATH)/kernel; $(MAKE)
 
 $(LDSCRIPT): $(LDSCRIPT).S
-	$(CC) -P -E $< -o kernel.ld
+	$(CC) -P -E $< -o kernel.ld -I../include
 
 clean:
 	cd $(ARCHPATH)/kernel; $(MAKE) clean

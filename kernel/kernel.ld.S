@@ -2,6 +2,9 @@ ENTRY(startup_32)
 OUTPUT_ARCH(i386)
 OUTPUT_FORMAT(elf32-i386)
 
+#define __ASSEMBLY__
+#include <asm-i386/thread_info.h>
+
 #define LOAD_OFFSET 0xc0000000
 #define LOAD_PHYSICAL_ADDR 0x00100000
 #define PAGE_SIZE 4096
@@ -20,6 +23,9 @@ SECTIONS
 
     . = ALIGN(16);
 
+    . = ALIGN(THREAD_SIZE);
+    .data.init_task : { *(.data.init_task)}
+
 /*    .text : AT(ADDR(.text) - LOAD_OFFSET){ 
          *(.text);
      }*/
@@ -32,10 +38,12 @@ SECTIONS
          *(.data);
      }*/
 
+
+    . = ALIGN(4096);
     __bss_start = .;      /* BSS */
     .bss : {
-          *(.bss.page_aligned)
-                *(.bss)
+          *(.bss.page_aligned);
+          *(.bss);
                 
     }
     . = ALIGN(4);

@@ -1,4 +1,7 @@
+#define __ASSEMBLY__ 
+
 #include <asm-i386/page.h>
+#include <balsam/sched.h>
 #include <asm/segment.h>
 #include <asm/linkage.h>
 
@@ -6,7 +9,8 @@
 
 .global start_kernel
 .global init_pg_tables_end
-
+.global init_thread_union
+        
 #define INIT_MAP_BEYOND_END (128 * 1024)
 
 ENTRY(startup_32)
@@ -68,9 +72,8 @@ ENTRY(swapper_pg_dir)
 .data
 //TODO
 ENTRY(stack_start)
-        .long 0x00100000
-//    .long init_thread_union + THREAD_SIZE // 8192
-//     .long __BOOT_DS
+    .long init_thread_union + THREAD_SIZE // 8192
+    .long __BOOT_DS
 
 
 
