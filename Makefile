@@ -20,7 +20,7 @@ IMAGE		:= 	balsam
 BOOT_PATH	:= 	arch/$(ARCH)/boot
 BOOTIMG		:= 	$(BOOT_PATH)/boot.img
 
-KERNEL_PATH	:= 	kernel
+KERNEL_PATH	:= 	init
 KERNELIMG	:= 	$(KERNEL_PATH)/kernel.img
 
 all: $(IMAGE)
