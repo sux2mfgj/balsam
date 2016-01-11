@@ -2,3 +2,5 @@
 *.img
 *.map
 kernel.ld
+/balsam
+kernel.debug
