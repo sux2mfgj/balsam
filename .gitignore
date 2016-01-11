@@ -1,5 +1,4 @@
 *.o
 *.img
 *.map
-balsam
 kernel.ld

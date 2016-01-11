@@ -1,0 +1,112 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ARCH	./Makefile	/^ARCH		:= 	x86$/;"	m
+ARCHOBJS	./kernel/Makefile	/^ARCHOBJS	:= $(ARCHPATH)\/kernel\/head.o$/;"	m
+ARCHPATH	./kernel/Makefile	/^ARCHPATH	:= ..\/arch\/$(ARCH)$/;"	m
+BALSAM	./arch/x86/Makefile	/^BALSAM		:= 	balsam$/;"	m
+BOOT	./arch/x86/Makefile	/^BOOT		:=	boot\/boot.img$/;"	m
+BOOT	./arch/x86/boot/Makefile	/^BOOT 		= 	boot.img$/;"	m
+BOOTIMG	./Makefile	/^BOOTIMG		:= 	$(BOOT_PATH)\/boot.img$/;"	m
+BOOTSECTOR	./arch/x86/boot/Makefile	/^BOOTSECTOR 	:= 	bootsector\/bootsector.img$/;"	m
+BOOTSEG	./arch/x86/boot/bootsector/bootsector.asm	/^BOOTSEG     equ     0x7c0$/;"	d
+BOOTSEG	./arch/x86/boot/header.asm	/^BOOTSEG                 equ     0x7c0$/;"	d
+BOOTSEG	./arch/x86/boot/loader/loader.asm	/^BOOTSEG                 equ     0x7c0$/;"	d
+BOOT_PATH	./Makefile	/^BOOT_PATH	:= 	arch\/$(ARCH)\/boot$/;"	m
+CC	./Makefile	/^CC			:= 	clang$/;"	m
+CFLAGS	./Makefile	/^CFLAGS		:=	-Wall -ggdb3 -O0 --target=i686-elf$/;"	m
+CYLS	./arch/x86/boot/loader/loader.asm	/^CYLS                    equ     10$/;"	d
+GDT_ENTRY	./arch/x86/include/asm/segment.h	3;"	d
+GDT_ENTRY_BOOT_CS	./arch/x86/include/asm/segment.h	11;"	d
+GDT_ENTRY_BOOT_DS	./arch/x86/include/asm/segment.h	14;"	d
+HEADER	./arch/x86/boot/Makefile	/^HEADER		:=	header.img$/;"	m
+IMAGE	./Makefile	/^IMAGE		:= 	balsam$/;"	m
+IMAGE	./arch/x86/boot/bootsector/Makefile	/^IMAGE	:= bootsector.img$/;"	m
+IMAGE	./kernel/Makefile	/^IMAGE		:= kernel.img$/;"	m
+KERNEL	./arch/x86/Makefile	/^KERNEL		:=	kernel\/kernel.img$/;"	m
+KERNEL	./arch/x86/kernel/Makefile	/^KERNEL = kernel.img$/;"	m
+KERNELIMG	./Makefile	/^KERNELIMG	:= 	$(KERNEL_PATH)\/kernel.img$/;"	m
+KERNEL_ENTRY_POINT	./arch/x86/boot/header.asm	/^KERNEL_ENTRY_POINT      equ     0x00100000$/;"	d
+KERNEL_PATH	./Makefile	/^KERNEL_PATH	:= 	kernel$/;"	m
+KERNEL_SIZE	./arch/x86/boot/header.asm	/^KERNEL_SIZE             equ     0xb400 ;(180Kib \/ 4)(10 cylinder)$/;"	d
+KPMDS	./arch/x86/kernel/head.S	/^#define KPMDS   1 \/\/ number of kernel page directoris$/;"	d
+LD	./Makefile	/^LD 			:= 	ld$/;"	m
+LDFLAGS	./Makefile	/^LDFLAGS		:=  -m elf_i386 --oformat binary $/;"	m
+LDSCRIPT	./arch/x86/kernel/Makefile	/^LDSCRIPT := kernel.ld$/;"	m
+LDSCRIPT	./kernel/Makefile	/^LDSCRIPT 	:= kernel.ld$/;"	m
+LOADER	./arch/x86/boot/Makefile	/^LOADER 		:= 	loader\/loader.img$/;"	m
+LOADER	./arch/x86/boot/loader/Makefile	/^LOADER		=	loader.img$/;"	m
+LOAD_OFFSET	./kernel/kernel.ld.S	/^#define LOAD_OFFSET 0xc0000000$/;"	d
+LOAD_PHYSICAL_ADDR	./kernel/kernel.ld.S	/^#define LOAD_PHYSICAL_ADDR 0x00100000$/;"	d
+MAP	./kernel/Makefile	/^MAP			:= kernel.map$/;"	m
+OBJS	./arch/x86/kernel/Makefile	/^OBJS	:= head.o $/;"	m
+OBJS	./kernel/Makefile	/^OBJS		:= $(ARCHOBJS) main.o$/;"	m
+PAGE_OFFSET	./arch/x86/kernel/head.S	/^#define PAGE_OFFSET     0xc0000000$/;"	d
+PAGE_SIZE	./arch/x86/kernel/head.S	/^#define PAGE_SIZE   4096$/;"	d
+PAGE_SIZE	./kernel/kernel.ld.S	/^#define PAGE_SIZE 4096$/;"	d
+PGD_IDENT_ATTR	./arch/x86/kernel/head.S	/^#define PGD_IDENT_ATTR  0x001 \/\/ PRESENT$/;"	d
+PTE_IDENT_ATTR	./arch/x86/kernel/head.S	/^#define PTE_IDENT_ATTR  0x003 \/\/ PRESENT + RW$/;"	d
+QEMU	./Makefile	/^QEMU		:= qemu-system-i386$/;"	m
+QEMUFLAGS	./Makefile	/^QEMUFLAGS	:= 	-monitor stdio -m 16M -nographic -curses -gdb tcp::10000 -S$/;"	m
+QEMUFLAGS	./arch/x86/boot/Makefile	/^QEMUFLAGS	:=	-monitor stdio -gdb tcp::10000 #-S$/;"	m
+SEGMENT_KERNEL_HEAD	./arch/x86/boot/header.asm	/^SEGMENT_KERNEL_HEAD     equ     0x7e0$/;"	d
+SEGMENT_KERNEL_HEAD	./arch/x86/boot/loader/loader.asm	/^SEGMENT_KERNEL_HEAD     equ     0x7e0$/;"	d
+SEGMENT_KERNEL_SETUP	./arch/x86/boot/header.asm	/^SEGMENT_KERNEL_SETUP    equ     0x800$/;"	d
+SEGMENT_KERNEL_SETUP	./arch/x86/boot/loader/loader.asm	/^SEGMENT_KERNEL_SETUP    equ     0x800$/;"	d
+SEGMENT_KERNEL_TEMP	./arch/x86/boot/loader/loader.asm	/^SEGMENT_KERNEL_TEMP     equ     0x820$/;"	d
+TEMP_KERNEL_BASE_ADDR	./arch/x86/boot/header.asm	/^TEMP_KERNEL_BASE_ADDR   equ     0x00008200$/;"	d
+VRAM_TEXT_MODE	./arch/x86/kernel/main.c	6;"	d	file:
+X86_CR0_AM	./arch/x86/include/asm/processor-flags.h	10;"	d
+X86_CR0_CD	./arch/x86/include/asm/processor-flags.h	12;"	d
+X86_CR0_EM	./arch/x86/include/asm/processor-flags.h	5;"	d
+X86_CR0_ET	./arch/x86/include/asm/processor-flags.h	7;"	d
+X86_CR0_MP	./arch/x86/include/asm/processor-flags.h	4;"	d
+X86_CR0_NE	./arch/x86/include/asm/processor-flags.h	8;"	d
+X86_CR0_NW	./arch/x86/include/asm/processor-flags.h	11;"	d
+X86_CR0_PE	./arch/x86/include/asm/processor-flags.h	3;"	d
+X86_CR0_PG	./arch/x86/include/asm/processor-flags.h	13;"	d
+X86_CR0_TS	./arch/x86/include/asm/processor-flags.h	6;"	d
+X86_CR0_WP	./arch/x86/include/asm/processor-flags.h	9;"	d
+__BOOT_CS	./arch/x86/include/asm/segment.h	12;"	d
+__BOOT_DS	./arch/x86/include/asm/segment.h	15;"	d
+__brk_base	./kernel/kernel.ld.S	/^        __brk_base = .;$/;"	d
+__brk_limit	./kernel/kernel.ld.S	/^        __brk_limit = .;$/;"	d
+__memcpy	./arch/x86/include/asm/string.h	/^static inline void * __memcpy(void* to, const void* from, size_t n)$/;"	f
+_kernel_end	./kernel/kernel.ld.S	/^    _kernel_end = .;$/;"	d
+_kernel_start	./kernel/kernel.ld.S	/^    _kernel_start = .;$/;"	d
+_start	./arch/x86/boot/header.asm	/^_start:$/;"	l
+a20wait	./arch/x86/boot/header.asm	/^a20wait:$/;"	l
+bits	./arch/x86/boot/header.asm	/^bits 16$/;"	l
+bits	./arch/x86/boot/header.asm	/^bits 32$/;"	l
+ch_loop	./arch/x86/boot/loader/loader.asm	/^ch_loop:$/;"	l
+code_desc	./arch/x86/boot/header.asm	/^code_desc:$/;"	l
+data_desc	./arch/x86/boot/header.asm	/^data_desc:$/;"	l
+enable_a20	./arch/x86/boot/header.asm	/^enable_a20:$/;"	l
+error	./arch/x86/boot/loader/loader.asm	/^error:$/;"	l
+fin	./arch/x86/boot/header.asm	/^fin:$/;"	l
+gdt	./arch/x86/boot/header.asm	/^gdt:$/;"	l
+gdtr	./arch/x86/boot/header.asm	/^gdtr:$/;"	l
+hang	./arch/x86/boot/loader/loader.asm	/^hang:$/;"	l
+load_bootsector	./arch/x86/boot/loader/loader.asm	/^load_bootsector:$/;"	l
+load_kernel_main	./arch/x86/boot/loader/loader.asm	/^load_kernel_main:$/;"	l
+load_kernel_setup	./arch/x86/boot/loader/loader.asm	/^load_kernel_setup:$/;"	l
+mask_all_interrupt	./arch/x86/boot/header.asm	/^mask_all_interrupt:$/;"	l
+memcpy	./arch/x86/include/asm/string.h	23;"	d
+move_kernel	./arch/x86/boot/header.asm	/^move_kernel:$/;"	l
+msg	./arch/x86/boot/loader/loader.asm	/^msg db 'error occured', 0$/;"	d
+pa	./arch/x86/kernel/head.S	/^#define pa(X) ((X) - PAGE_OFFSET)$/;"	d
+protected_code	./arch/x86/boot/header.asm	/^protected_code:$/;"	l
+protected_mode_jump	./arch/x86/boot/header.asm	/^protected_mode_jump:$/;"	l
+setup_gdt	./arch/x86/boot/header.asm	/^setup_gdt:$/;"	l
+setup_idt	./arch/x86/kernel/head.S	/^setup_idt:$/;"	l
+start_kernel	./arch/x86/kernel/main.c	/^void start_kernel(void)$/;"	f
+start_kernel	./kernel/main.c	/^void start_kernel(void)$/;"	f
+startup	./arch/x86/kernel/head.S	/^startup:$/;"	l
+swapper_pg_dir	./arch/x86/kernel/head.S	/^swapper_pg_dir:$/;"	l
+swapper_pg_table	./arch/x86/kernel/head.S	/^swapper_pg_table:$/;"	l
+times	./arch/x86/boot/bootsector/bootsector.asm	/^times 510 - ($ - $$) db 0$/;"	l
+times	./arch/x86/boot/header.asm	/^times 512 - ($ - $$) db 0$/;"	l
+times	./arch/x86/boot/loader/loader.asm	/^times 510 - ($ - $$) db 0$/;"	l
