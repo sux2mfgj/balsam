@@ -1,2 +1,2 @@
 target remote localhost:10000
-file kernel/kernel.debug
+file init/kernel.debug
