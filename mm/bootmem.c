@@ -72,7 +72,7 @@ static void reserve_bootmem_core(bootmem_data_t *bdata, uint32_t addr, uint32_t 
   {
     if(test_and_set_bit(i, bdata->node_bootmem_map))
     {
-      printk("already reserved");
+      //printk("already reserved");
     }
   }
 }
