@@ -7,6 +7,7 @@
 #define PAGE_MASK   (~(PAGE_SIZE - 1))
 
 #define __PAGE_OFFSET       (0xC0000000)
+#define __PHYSICAL_START    (0x00100000)
 
 #ifndef __ASSEMBLY__
 

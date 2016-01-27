@@ -3,12 +3,12 @@
 
 #include <asm-i386/io.h>
 #include <asm-i386/string.h>
+#include <asm-i386/bitops.h>
 
 uint32_t min_low_pfn;
 uint32_t max_low_pfn;
 uint32_t max_pfn;
 
-/*
 static uint32_t init_bootmem_core(pg_data_t *pgdat,
                                   uint32_t mapstart, uint32_t start, uint32_t end)
 {
@@ -37,6 +37,52 @@ uint32_t init_bootmem(uint32_t start, uint32_t pages)
   return(init_bootmem_core(NODE_DATA(0), start, 0, pages));
 }
 
+
+static void free_bootmem_core(bootmem_data_t *bdata, uint32_t addr, uint32_t size)
+{
+  uint32_t start;
+  uint32_t sidx;
+  uint32_t eidx = (addr + size - bdata->node_boot_start) / PAGE_SIZE;
+  //  uint32_t end = (addr + size) / PAGE_SIZE;
+
+  start = (addr + PAGE_SIZE - 1) / PAGE_SIZE;
+  sidx = start - (bdata->node_boot_start / PAGE_SIZE);
+
+  for(int i = sidx; i < eidx; ++i)
+  {
+    if(!test_and_clear_bit(i, bdata->node_bootmem_map))
+    {
+      panic("BUG");
+    }
+  }
+}
+
+void free_bootmem(uint32_t addr, uint32_t size)
+{
+  free_bootmem_core(NODE_DATA(0)->bdata, addr, size);
+}
+
+static void reserve_bootmem_core(bootmem_data_t *bdata, uint32_t addr, uint32_t size)
+{
+  uint32_t sidx = (addr - bdata->node_boot_start) / PAGE_SIZE;
+  uint32_t eidx = (addr + size - bdata->node_boot_start + PAGE_SIZE - 1) /PAGE_SIZE;
+  //  uint32_t end = (addr + size + PAGE_SIZE - 1) / PAGE_SIZE;
+
+  for(uint32_t i = sidx; i < eidx; ++i)
+  {
+    if(test_and_set_bit(i, bdata->node_bootmem_map))
+    {
+      printk("already reserved");
+    }
+  }
+}
+
+void reserve_bootmem(uint32_t addr, uint32_t size)
+{
+  reserve_bootmem_core(NODE_DATA(0)->bdata, addr, size);
+}
+
+/*
 static void * __alloc_bootmem_core(struct bootmem_data *bdata, uint32_t size,
                                    uint32_t align, uint32_t goal)
 {

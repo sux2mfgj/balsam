@@ -26,4 +26,7 @@ static inline void *alloc_remap(int nid, uint32_t size)
 }
 
 extern uint32_t init_bootmem(uint32_t addr, uint32_t memend);
+extern void free_bootmem(uint32_t addr, uint32_t size);
+
+extern void reserve_bootmem(uint32_t addr, uint32_t size);
 //extern 

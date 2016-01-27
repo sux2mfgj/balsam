@@ -124,14 +124,50 @@ uint32_t find_max_low_pfn(void)
     return max_low_pfn;
 }
 
+static void register_bootmem_low_pages(uint32_t max_low_pfn)
+{
+  for(int i = 0; i < e820.nr_map; ++i)
+  {
+    uint32_t curr_pfn, last_pfn, size;
+
+    if(e820.map[i].type != E820_RAM)
+    {
+      continue;
+    }
+
+    curr_pfn = PFN_UP(e820.map[i].addr);
+    if(curr_pfn >= max_low_pfn)
+    {
+      continue;
+    }
+
+    last_pfn = PFN_DOWN(e820.map[i].addr + e820.map[i].size);
+    if(last_pfn > max_low_pfn)
+    {
+      last_pfn = max_low_pfn;
+    }
+
+    if(last_pfn <= curr_pfn)
+    {
+      continue;
+    }
+    size = last_pfn - curr_pfn;
+    free_bootmem(PFN_PHYS(curr_pfn), PFN_PHYS(size));
+  }
+}
+
 void setup_bootmem_allocator(void)
 {
-  //uint32_t bootmap_size;
+  uint32_t bootmap_size;
 
-    //bootmap_size = init_bootmem(min_low_pfn, max_low_pfn);
+  bootmap_size = init_bootmem(min_low_pfn, max_low_pfn);
 
-    //register_bootmem_low_pages(max_low_pfn);
+  register_bootmem_low_pages(max_low_pfn);
     //WIP
+
+  reserve_bootmem(__PHYSICAL_START, (PFN_PHYS(min_low_pfn) +
+                                     bootmap_size + PAGE_SIZE - 1) - (__PHYSICAL_START));
+  reserve_bootmem(0, PAGE_SIZE);
 }
 
 static uint32_t setup_memory(void)
@@ -147,7 +183,7 @@ static uint32_t setup_memory(void)
     // setup for highmem
 
     setup_bootmem_allocator();
-    //WIP
+
     return max_low_pfn;
 }
 

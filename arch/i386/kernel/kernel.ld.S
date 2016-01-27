@@ -32,8 +32,13 @@ SECTIONS
 
     .data : {
         *(.data)
-    }
-/*     . = ALIGN(PAGE_SIZE);
+    }             
+
+    .rodata : {
+        *(.rodata)
+    }    
+
+        /*     . = ALIGN(PAGE_SIZE);
      .data : AT(ADDR(.data) - LOAD_OFFSET){ 
          *(.data);
      }*/
