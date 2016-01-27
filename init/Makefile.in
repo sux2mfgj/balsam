@@ -1,0 +1,10 @@
+current_path +=/init
+
+init_objs := main.o
+
+#  objs := $(foreach file, $(init_objes), init/$(file))
+
+OBJS += $(foreach file, $(init_objs), $(current_path)/$(file))
+
+
+

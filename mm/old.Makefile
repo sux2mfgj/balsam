@@ -1,5 +1,5 @@
 
-OBJS 	:= 	bootmem.o
+OBJS 	:= 	bootmem.o memory.o page_alloc.o
 
 .c.o:
 	$(CC) $(CFLAGS) $< -c -I../include

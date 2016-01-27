@@ -1,4 +1,10 @@
-#MM_OBJS := ../mm/distconfig.o
+IMAGE		:= kernel.img
+DEBUG_OBJ   := kernel.debug
+##WIP
+
+
+
+MM_OBJS := ../mm/distconfig.o ../mm/init.o
 OBJS	:= head_32.o setup.o init_task.o $(MM_OBJS)
 
 .S.o: 
@@ -7,7 +13,10 @@ OBJS	:= head_32.o setup.o init_task.o $(MM_OBJS)
 .c.o:
 	$(CC) $(CFLAGS) $< -c -I../include -I../../../include
 
-all: $(OBJS)
+all: $(OBJS) $(MM_OBJS)
+
+$(MM_OBJS):
+	cd ../mm; $(MAKE)
 	
 clean:
 	rm -f $(OBJS)

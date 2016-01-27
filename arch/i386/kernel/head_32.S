@@ -43,7 +43,7 @@ page_pde_offset = (__PAGE_OFFSET >> 20);
     leal (INIT_MAP_BEYOND_END + 0x007)(%edi), %ebp
     cmpl %ebp, %eax
     jb 10b
-//    movl %edi, (init_pg_tables_end - __PAGE_OFFSET)
+    movl %edi, (init_pg_tables_end - __PAGE_OFFSET)
 
     // enable paging
     movl $swapper_pg_dir - __PAGE_OFFSET, %eax

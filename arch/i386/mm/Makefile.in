@@ -1,0 +1,7 @@
+current_path := $(join $(current_path), /mm)
+
+$(info $(current_path)/mm)
+
+objs := init.o
+
+OBJS += $(foreach file, $(objs), $(current_path)/$(file))

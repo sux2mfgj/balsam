@@ -1,0 +1,7 @@
+#current_path :=$(join $(current_path), /kernel)
+current_path+=/kernel
+
+objs := head_32.o setup.o init_task.o
+
+OBJS += $(foreach file, $(objs), $(current_path)/$(file))
+
