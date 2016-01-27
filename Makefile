@@ -13,7 +13,7 @@ DEBUG_LDFLAGS := -m elf_i386
 #QEMUEXTRA 	:= 	-serial mon:stdio	
 #  QEMUFLAGS	:= 	-monitor stdio -m 16M -nographic -gdb tcp::10000 -S $(QEMUEXTRA)
 #  QEMUFLAGS	:= 	-m 16M -nographic -gdb tcp::10000 -S $(QEMUEXTRA)
-QEMUFLAGS	:= 	-m 16M -gdb tcp::10000 -S $(QEMUEXTRA)
+QEMUFLAGS	:= 	-m 896M -gdb tcp::10000 -S $(QEMUEXTRA)
 
 IMAGE		:= 	balsam
 

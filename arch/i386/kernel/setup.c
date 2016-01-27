@@ -18,56 +18,54 @@
 uint32_t init_pg_tables_end = ~0UL;
 
 // 2GB Memory
-struct e820map e820;
-
-/*= {
-    .nr_map  =  1,
-    .map = {
-        //[mem 0x0000000000000000-0x000000000009fbff] usable
-        {
-            .addr = 0x00000000,
-            .size = 0x0009fbff,
-            .type = E820_RAM,
-        },
-        //[mem 0x000000000009fc00-0x000000000009ffff] reserved
-        {
-            .addr = 0x0009fc00,
-            .size = 0x0009ffff - 0x0009fc00,
-            .type = E820_RESEVED,
-        },
-        //[mem 0x00000000000f0000-0x00000000000fffff] reserved
-        {
-            .addr = 0x000f0000,
-            .size = 0x000fffff - 0x000f0000,
-            .type = E820_RESEVED,
-        },
-        //[mem 0x0000000000100000-0x000000007ffd8fff] usable
-        {
-            .addr = 0x00100000,
-            .size = 0x7ffd8fff - 0x00100000,
-            .type = E820_RAM,
-        },
-        //[mem 0x000000007ffd9000-0x000000007fffffff] reserved
-        {
-            .addr = 0x7ffd9000,
-            .size = 0x7fffffff - 0x7ffd9000,
-            .type = E820_RESEVED,
-        },
-        //[mem 0x00000000feffc000-0x00000000feffffff] reserved
-        {
-            .addr = 0xfeffc000,
-            .size = 0xfeffffff - 0xfeffc000,
-            .type = E820_RESEVED,
-        },
-        //[mem 0x00000000fffc0000-0x00000000ffffffff] reserved
-        {
-            .addr = 0xfffc0000,
-            .size = 0xffffffff - 0xfffc0000,
-            .type = E820_RESEVED,
-        },
-    }
+struct e820map e820 = {
+  .nr_map  =  7,
+  .map = {
+    //[mem 0x0000000000000000-0x000000000009fbff] usable
+    {
+      .addr = 0x00000000,
+      .size = 0x0009fbff,
+      .type = E820_RAM,
+    },
+    //[mem 0x000000000009fc00-0x000000000009ffff] reserved
+    {
+      .addr = 0x0009fc00,
+      .size = 0x0009ffff - 0x0009fc00,
+      .type = E820_RESEVED,
+    },
+    //[mem 0x00000000000f0000-0x00000000000fffff] reserved
+    {
+      .addr = 0x000f0000,
+      .size = 0x000fffff - 0x000f0000,
+      .type = E820_RESEVED,
+    },
+    //[mem 0x0000000000100000-0x000000007ffd8fff] usable
+    {
+      .addr = 0x00100000,
+      .size = 0x7ffd8fff - 0x00100000,
+      .type = E820_RAM,
+    },
+    //[mem 0x000000007ffd9000-0x000000007fffffff] reserved
+    {
+      .addr = 0x7ffd9000,
+      .size = 0x7fffffff - 0x7ffd9000,
+      .type = E820_RESEVED,
+    },
+    //[mem 0x00000000feffc000-0x00000000feffffff] reserved
+    {
+      .addr = 0xfeffc000,
+      .size = 0xfeffffff - 0xfeffc000,
+      .type = E820_RESEVED,
+    },
+    //[mem 0x00000000fffc0000-0x00000000ffffffff] reserved
+    {
+      .addr = 0xfffc0000,
+      .size = 0xffffffff - 0xfffc0000,
+      .type = E820_RESEVED,
+    },
+  },
+  
 };
-*/
 
 static uint32_t highmem_pages = -1;
 
