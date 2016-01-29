@@ -6,8 +6,8 @@ LD 			:= 	ld
 
 QEMU		:= qemu-system-i386
 
-CFLAGS		:=	-Wall -O0 --target=i686-elf
-LDFLAGS		:=  -m elf_i386 --oformat binary
+CFLAGS		:=	-Wall -O0 --target=i686-elf -ggdb3
+LDFLAGS		:=  -m elf_i386 --oformat binary 
 DEBUG_LDFLAGS := -m elf_i386
 #  QEMUEXTRA 	:= 	-curses
 #QEMUEXTRA 	:= 	-serial mon:stdio	
@@ -29,10 +29,10 @@ DEBUG_OBJ 	:= 	kernel.debug
 
 LDSCRIPT 	:= 	$(ARCH_PATH)/kernel/kernel.ld
 
-arch_objs 	:=  kernel/head_32.o kernel/setup.o kernel/init_task.o mm/init.o lib/memcpy.o
+arch_objs 	:=  kernel/head_32.o kernel/setup.o kernel/init_task.o mm/init.o lib/memcpy.o lib/bitops.o
 init_objs 	:=  main.o
 mm_objs		:=  bootmem.o page_alloc.o
-kernel_objs	:=  printk.o panic.o
+kernel_objs	:=  printk.o panic.o 
 
 OBJS := $(foreach file, $(arch_objs), $(ARCH_PATH)/$(file)) \
 	$(foreach file, $(init_objs), init/$(file)) \

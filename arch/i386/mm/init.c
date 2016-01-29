@@ -12,7 +12,9 @@
 uint32_t __VMALLOC_RESERVE = 128 << 20;
 
 uint32_t highstart_pfn, highend_pfn;
-/*
+
+extern char __init_begin, __init_end;
+
 static pmd_t* one_md_table_init(pgd_t *pgd)
 {
   pud_t *pud;
@@ -34,11 +36,19 @@ static pte_t* one_page_table_init(pmd_t* pmd)
     set_pmd(pmd, __pmd(__pa(page_table) | _PAGE_TABLE));
     if(page_table != pte_offset_kernel(pmd, 0))
     {
-      BUG();
+      panic();
     }
     return page_table;
   }
   return pte_offset_kernel(pmd, 0);
+}
+
+static inline int is_kernel_text(uint32_t addr)
+{
+  if(addr >= PAGE_OFFSET && addr <= (uint32_t)__init_end)
+    return 1;
+
+  return 0;
 }
 
 static void kernel_physical_mapping_init(pgd_t *pgd_base)
@@ -57,7 +67,11 @@ static void kernel_physical_mapping_init(pgd_t *pgd_base)
 
   for(;pgd_idx < PTRS_PER_PGD; pgd++, pgd_idx++)
   {
+
+    //    for(pgd_idx = )
+    
     pmd = one_md_table_init(pgd);
+
     if(pfn >= max_low_pfn)
     {
       continue;
@@ -85,7 +99,7 @@ static void kernel_physical_mapping_init(pgd_t *pgd_base)
       }
       //}
     }
-      
+
   }
   
 }
@@ -108,4 +122,4 @@ void paging_init(void)
   //WIP
 }
 
-*/
+

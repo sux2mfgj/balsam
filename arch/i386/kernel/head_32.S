@@ -65,9 +65,12 @@ page_pde_offset = (__PAGE_OFFSET >> 20);
 
     call start_kernel
 
-.section ".bss.page_aligned", "w"
+// .section ".bss.page_aligned", "w"
+.section ".swapper_pg_dir", "w"
 ENTRY(swapper_pg_dir)
     .fill 1024, 4, 0
+ENTRY(empty_zero_page)
+    .fill 4096, 1, 0
 
 .data
 //TODO

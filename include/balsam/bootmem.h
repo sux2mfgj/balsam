@@ -30,3 +30,8 @@ extern void free_bootmem(uint32_t addr, uint32_t size);
 
 extern void reserve_bootmem(uint32_t addr, uint32_t size);
 //extern 
+
+void * __alloc_bootmem(uint32_t size, uint32_t align, uint32_t goal);
+
+#define alloc_bootmem_low_pages(x) \
+  __alloc_bootmem((x), PAGE_SIZE, 0)

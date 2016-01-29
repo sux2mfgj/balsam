@@ -82,7 +82,7 @@ void reserve_bootmem(uint32_t addr, uint32_t size)
   reserve_bootmem_core(NODE_DATA(0)->bdata, addr, size);
 }
 
-/*
+
 static void * __alloc_bootmem_core(struct bootmem_data *bdata, uint32_t size,
                                    uint32_t align, uint32_t goal)
 {
@@ -174,7 +174,7 @@ found:
   {
     if(test_and_set_bit(i, bdata->node_bootmem_map))
       {
-        BUG();
+        panic("BUG");
       }
   }
   memset(ret, 0, size);
@@ -186,12 +186,12 @@ void * __alloc_bootmem(uint32_t size, uint32_t align, uint32_t goal)
   pg_data_t *pgdat = pgdat_list;
   void *ptr;
 
-  for_each_pgdat(pgdat) {
+  for_each_pgdat(pgdat) 
     if((ptr = __alloc_bootmem_core(pgdat->bdata, size, align, goal))){
       return(ptr);
     }
-  }
+
   panic("out of memory");
+  return NULL;
 }
 
-*/

@@ -116,10 +116,6 @@ typedef struct pglist_data
   int kswapd_max_order;
 } pg_data_t;
 
-/*
-#define alloc_bootmem_low_pages((x) \
-  __alloc_bootmem((x), PAGE_SIZE, 0)
-
 #define for_each_pgdat(pgdat) \
   for(pgdat = pgdat_list; pgdat; pgdat = pgdat->pgdat_next)
-*/
+

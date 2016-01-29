@@ -43,12 +43,18 @@ SECTIONS
          *(.data);
      }*/
 
-
     . = ALIGN(4096);
+    __init_end = .;
+
     __bss_start = .;      /* BSS */
-    .bss : {
+/*    .bss.page_aligned : {
           *(.bss.page_aligned);
-          *(.bss);
+    }
+ */
+//     . = ALIGN(1024);
+    .bss : {
+        *(.swapper_pg_dir);
+        *(.bss);
                 
     }
     . = ALIGN(4);

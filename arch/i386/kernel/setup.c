@@ -214,7 +214,7 @@ void setup_arch(void)
   printk("setup_arch");
     max_low_pfn = setup_memory();
 
-    //paging_init();
+    paging_init();
     //WIP
 
     //zone_sizes_init();
