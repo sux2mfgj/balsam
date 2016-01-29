@@ -7,7 +7,7 @@
 #include <asm-i386/dma.h>
 #include <asm-i386/highmem.h>
 #include <asm-i386/io.h>
-//#include <asm-i386/
+#include <asm-i386/processor.h>
 
 
 #include <balsam/init.h>
@@ -215,6 +215,7 @@ void setup_arch(void)
     max_low_pfn = setup_memory();
 
     paging_init();
+    load_cr3(swapper_pg_dir);
     //WIP
 
     //zone_sizes_init();

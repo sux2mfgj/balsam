@@ -3,6 +3,8 @@
 #include <asm-i386/pgtable-2level-defs.h>
 #include <asm-i386/page.h>
 #include <asm-i386/pgtable.h>
+#include <asm-i386/processor.h>
+#include <asm-i386/tlbflush.h>
 
 
 #include <balsam/pgtable-nopud.h>
@@ -112,14 +114,23 @@ static void pagetable_init(void)
   //TODO x86 cpu PSE(page size extension), PGE(page global enbale)
 
   kernel_physical_mapping_init(pgd_base);
-  
-  //WIP
+
+  //TODO
+  // setup for fixed mappings.
+  // vaddr = __fix_to_virt(__end_of_fixed_addresses - 1) & PMD_MASK;
+  // page_table_range_init(vaddr, 0, pgd_base);
+  // permanent_kmaps_init(pgd_base);
 }
 
 void paging_init(void)
 {
   pagetable_init();
-  //WIP
+  load_cr3(swapper_pg_dir);
+
+  __flush_tlb_all();
+
+  //TODO setup highmem
+  //kmap_init();
 }
 
 
