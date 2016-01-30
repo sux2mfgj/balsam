@@ -102,7 +102,7 @@ typedef struct pglist_data
   struct zone node_zones[MAX_NR_ZONES];   //TODO
   struct zonelist node_zonelists[GFP_ZONETYPES];//TODO
 
-  int nr_nozes;
+  int nr_zones;
   struct page *node_mem_map;
   struct bootmem_data *bdata;
   uint32_t node_start_pfn;

@@ -30,10 +30,9 @@ typedef struct {uint32_t pte_low;} pte_t;
 
 #define __pmd(x) ((pmd_t) { (x) } )
 #define __pte(x) ((pte_t) { (x) })
-#define __pgprot(x) ((pgprot_t){ (x) })
 
 typedef struct {uint32_t pgprot; } pgprot_t;
-#define __pgprot(x) ((pgprot_t) { (x) } )
+#define __pgprot(x) ((pgprot_t){ (x) })
 
 extern pgd_t swapper_pg_dir[1024];
 

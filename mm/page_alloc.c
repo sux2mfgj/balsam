@@ -4,11 +4,14 @@
 #include <balsam/mmzone.h>
 #include <balsam/mm.h>
 #include <balsam/bootmem.h>
+#include <balsam/cache.h>
+
+#include <asm-i386/atomic.h>
 
 struct pglist_data *pgdat_list;
 
-/*
-static void calculawwte_zone_totalpages(struct pglist_data *pgdat,
+
+static void calculate_zone_totalpages(struct pglist_data *pgdat,
                                       uint32_t *zones_size, uint32_t *zholes_size)
 {
   uint32_t realtotalpages, totalpages = 0;
@@ -40,25 +43,40 @@ static void alloc_node_mem_map(struct pglist_data *pgdat)
     struct page *map;
 
     size = (pgdat->node_spanned_pages + 1) * sizeof(struct page);
-    map = alloc_remap(pgdat->node_id, size);
-    if(!map)
-    {
-      map = alloc_bootmem_node(pgdat, size);
-    }
+    //    map = alloc_remap(pgdat->node_id, size);
+    
+    map = alloc_bootmem_node(pgdat, size);
+    
     pgdat->node_mem_map = map;
   }
   
-  if(pgdat == NODE_DATA(0))
-  {
+  //  if(pgdat == NODE_DATA(0))
+  //  {
     mem_map = NODE_DATA(0)->node_mem_map;
-  }
+    //  }
 }
 
 static char *zone_names[MAX_NR_ZONES] = {"DMA", "Normal", "HighMem"};
 uint32_t nr_kernel_pages;
 uint32_t nr_all_pages;
-*/
-/*
+
+
+#define PAGES_PER_WAITQUEUE 256
+static inline uint32_t wait_table_size(uint32_t pages)
+{
+  uint32_t size = 1;
+  pages /= PAGES_PER_WAITQUEUE;
+
+  while(size < pages)
+  { 
+    size <<= 1;
+  }
+
+  size = min(size, 4096UL);
+
+  return max(size, 4UL);
+}
+
 static void free_area_init_core(struct pglist_data *pgdat,
                                 uint32_t *zones_size, uint32_t *zholes_size)
 {
@@ -68,7 +86,7 @@ static void free_area_init_core(struct pglist_data *pgdat,
 
   pgdat->nr_zones = 0;
   init_waitqueue_head(&pgdat->kswapd_wait);
-  pgdat->kswapd_max_ornder = 0;
+  pgdat->kswapd_max_order = 0;
 
   for(j = 0; j < MAX_NR_ZONES; j++)
   {
@@ -84,14 +102,14 @@ static void free_area_init_core(struct pglist_data *pgdat,
 
     if(j == ZONE_DMA || j == ZONE_NORMAL)
     {
-      nz_kernel_pages += realsize;
+      nr_kernel_pages += realsize;
     }
 
     nr_all_pages += realsize;
 
     zone->spanned_pages = size;
     zone->present_pages = realsize;
-    zone->name = none_names[j];
+    zone->name = zone_names[j];
     spin_lock_init(&zone->lock);
     spin_lock_init(&zone->lru_lock);
     zone->zone_pgdat = pgdat;
@@ -146,8 +164,7 @@ static void free_area_init_core(struct pglist_data *pgdat,
 
   }
 }
-*/
-/*
+
 void free_area_init_node(int nid, struct pglist_data *pgdat,
                            uint32_t *zones_size, uint32_t node_start_pfn,
                            uint32_t *zholes_size)
@@ -155,22 +172,21 @@ void free_area_init_node(int nid, struct pglist_data *pgdat,
   pgdat->node_id = nid;
   pgdat->node_start_pfn = node_start_pfn;
 
-  
   calculate_zone_totalpages(pgdat, zones_size, zholes_size);
 
   //alloc and regist mem_map
-  alloc_node_mem_map(struct pglist_data *pgdat);
+  alloc_node_mem_map(pgdat);
 
-  free_area_init_core(pgdat, zones_size, zholes_size);
+  //free_area_init_core(pgdat, zones_size, zholes_size);
 }
-*/
+
 static bootmem_data_t contig_bootmem_data;
 struct pglist_data contig_page_data = { .bdata = &contig_bootmem_data};
 
-/*
+
 void free_area_init(uint32_t *zones_size)
 {
   free_area_init_node(0, NODE_DATA(0), zones_size,
                       __pa(PAGE_OFFSET) >> PAGE_SHIFT, NULL);
 }
-*/
+

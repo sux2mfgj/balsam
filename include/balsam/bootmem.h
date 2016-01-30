@@ -4,6 +4,9 @@
 #include <stddef.h>
 
 #include <balsam/mmzone.h>
+#include <balsam/cache.h>
+
+#include <asm-i386/dma.h>
 
 extern uint32_t min_low_pfn;
 extern uint32_t max_low_pfn;
@@ -32,6 +35,10 @@ extern void reserve_bootmem(uint32_t addr, uint32_t size);
 //extern 
 
 void * __alloc_bootmem(uint32_t size, uint32_t align, uint32_t goal);
-
+void * __alloc_bootmem_node(pg_data_t *pgdat, uint32_t size, uint32_t align, uint32_t goal);
+  
 #define alloc_bootmem_low_pages(x) \
   __alloc_bootmem((x), PAGE_SIZE, 0)
+
+#define alloc_bootmem_node(pgdat, x) \
+  __alloc_bootmem_node((pgdat), (x), SMP_CACHE_BYTES, __pa(MAX_DMA_ADDRESS))

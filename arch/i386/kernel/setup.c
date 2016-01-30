@@ -206,6 +206,7 @@ void zone_sizes_init(void)
     zones_size[ZONE_NORMAL] = low - max_dma;
     //TODO HIGHMEM
   }
+  free_area_init(zones_size);
   
 }
 
@@ -215,8 +216,8 @@ void setup_arch(void)
     max_low_pfn = setup_memory();
 
     paging_init();
-    load_cr3(swapper_pg_dir);
-    //WIP
+    //remapped_pgdat_init();
 
-    //zone_sizes_init();
+    zone_sizes_init();
+    //WIP
 }

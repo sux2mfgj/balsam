@@ -31,7 +31,7 @@ LDSCRIPT 	:= 	$(ARCH_PATH)/kernel/kernel.ld
 
 arch_objs 	:=  kernel/head_32.o kernel/setup.o kernel/init_task.o mm/init.o lib/memcpy.o lib/bitops.o
 init_objs 	:=  main.o
-mm_objs		:=  bootmem.o page_alloc.o
+mm_objs		:=  bootmem.o page_alloc.o memory.o
 kernel_objs	:=  printk.o panic.o 
 
 OBJS := $(foreach file, $(arch_objs), $(ARCH_PATH)/$(file)) \

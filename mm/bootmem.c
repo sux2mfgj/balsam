@@ -195,3 +195,12 @@ void * __alloc_bootmem(uint32_t size, uint32_t align, uint32_t goal)
   return NULL;
 }
 
+void * __alloc_bootmem_node(pg_data_t *pgdat, uint32_t size, uint32_t align, uint32_t goal)
+{
+  void *ptr;
+  ptr = __alloc_bootmem_core(pgdat->bdata, size, align, goal);
+  if(ptr)
+    return (ptr);
+
+  return __alloc_bootmem(size, align, goal);
+}

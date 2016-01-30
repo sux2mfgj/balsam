@@ -5,6 +5,8 @@
 #include <balsam/list.h>
 #include <balsam/types.h>
 
+#include <asm-i386/atomic.h>
+
 typedef uint32_t page_flags_t;
 
 struct page
@@ -23,3 +25,7 @@ struct page
 
   void *virtual; //TODO inspect ??
 };
+
+extern struct page* mem_map;
+
+
