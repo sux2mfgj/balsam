@@ -7,7 +7,6 @@
 #define E820_ACPI       3
 #define E820_NVS        4
 
-
 #ifndef __ASSEMBLY__
 
 struct e820map {
@@ -20,7 +19,5 @@ struct e820map {
 };
 
 extern struct e820map e820;
-
-
 
 #endif //__ASSEMBLY__

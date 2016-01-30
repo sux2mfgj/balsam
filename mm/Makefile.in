@@ -1,0 +1,5 @@
+current_path +=$(strip /mm)
+
+mm_objs	:= bootmem.o page_alloc.o
+
+OBJS += $(foreach file, $(mm_objs), $(current_path)/$(file))

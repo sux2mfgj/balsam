@@ -1,0 +1,12 @@
+#current_path :=$(join $(current_path), /arch/i386)
+current_path+=/arch/i386
+
+include_makefiles := kernel/Makefile.in mm/Makefile.in
+$(info i386 makefile.in)
+$(info -----------------)
+$(info $(current_path))
+$(info -----------------)
+$(info $(include_makefiles))
+$(info $(foreach path,$(include_makefiles),$(current_path)/$(path)))
+$(info -----------------)
+include $(foreach path, $(include_makefiles), $(current_path)/$(path))
